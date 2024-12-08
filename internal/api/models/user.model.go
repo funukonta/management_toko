@@ -17,3 +17,12 @@ type Users struct {
 	Updated_at time.Time      `json:"updated_at"`
 	Deleted_at gorm.DeletedAt `json:"deleted_at"`
 }
+
+type UserCondition struct {
+	Where UserWhere
+}
+
+type UserWhere struct {
+	ID       string
+	Username string
+}
