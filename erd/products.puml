@@ -1,0 +1,27 @@
+@startuml "products"
+entity "products" as products {
+    * id : uuid [primary key]
+    * name : varchar 
+    * type : varchar
+    * price : float
+    * quantity : int
+}
+
+entity "product_type" as product_type {
+    * code : varchar(10) [primary key]
+    * description : varchar(40)
+    * label : varchar(40)
+}
+
+entity "product_images" as product_images {
+    * id_product : uuid
+    * primaryImage : varchar(10)
+    * image1 : text
+    * image2 : text
+    * image3 : text
+}
+
+
+product_type::code --> products::type
+products::id --> product_images::id_product
+@enduml

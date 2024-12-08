@@ -1,0 +1,24 @@
+@startuml orders
+!include products.puml
+' Hide all entities except "products"
+hide product_type
+hide product_images
+
+!include users.puml
+
+entity "orders" as orders {
+    * id : uuid [primary_key]
+    * id_product : uuid
+    * id_user : uuid
+    * quantity : int
+    * total_price : float
+    * note : text
+    * created_at : datetime
+    * updated_at : datetime
+    * deleted_at : datetime
+}
+
+' Relation
+products::id --> orders::id_product
+users::id --> orders::id_user
+@enduml
