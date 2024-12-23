@@ -28,7 +28,7 @@ func ConnectPostgres() *gorm.DB {
 		db_sslmode,
 		db_timezone)
 
-	db, err := gorm.Open(postgres.Open(dsn), &gorm.Config{})
+	db, err := gorm.Open(postgres.Open(dsn), &gorm.Config{TranslateError: true})
 	if err != nil {
 		log.Println("Error : ", err.Error())
 		return nil
