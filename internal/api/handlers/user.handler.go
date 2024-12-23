@@ -37,3 +37,19 @@ func (h *HanlderUser) Login(c *fiber.Ctx) error {
 	c.Status(fiber.StatusOK).JSON(resp)
 	return nil
 }
+
+func (h *HanlderUser) Register(c *fiber.Ctx) error {
+	var req dtos.RegisterReq
+	err := c.BodyParser(&req)
+	if err != nil {
+		return common.NewError(fiber.ErrBadRequest.Code, err.Error())
+	}
+
+	resp, err := h.userUc.Register(req)
+	if err != nil {
+		return common.NewError(fiber.ErrBadRequest.Code, err.Error())
+	}
+
+	c.Status(fiber.StatusOK).JSON(resp)
+	return nil
+}

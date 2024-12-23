@@ -1,6 +1,10 @@
 package repositories
 
 import (
+	"errors"
+	"fmt"
+	"log"
+
 	"github.com/funukonta/management_toko/internal/api/models"
 	"gorm.io/gorm"
 )
@@ -8,6 +12,7 @@ import (
 type RepoUser interface {
 	GetUser(models.UserCondition) (*models.Users, error)
 	GetUserList()
+	CreateUser(*models.Users) error
 }
 
 type repoUser struct {
@@ -40,3 +45,20 @@ func populateUserWithWhere(db *gorm.DB, where models.UserWhere) {
 }
 
 func (r *repoUser) GetUserList() {}
+
+func (r *repoUser) CreateUser(u *models.Users) error {
+	q := r.db.Create(u)
+
+	err := q.Error
+	if err != nil {
+		log.Println("Error on user", err.Error())
+		if errors.Is(err, gorm.ErrDuplicatedKey) {
+			return err
+		}
+
+		return fmt.Errorf("USER")
+	}
+
+	return nil
+
+}

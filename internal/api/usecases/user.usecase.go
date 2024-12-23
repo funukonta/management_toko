@@ -3,6 +3,7 @@ package usecases
 import (
 	"errors"
 
+	"github.com/funukonta/management_toko/internal/api/constants"
 	"github.com/funukonta/management_toko/internal/api/dtos"
 	"github.com/funukonta/management_toko/internal/api/models"
 	"github.com/funukonta/management_toko/internal/api/repositories"
@@ -40,6 +41,41 @@ func (uc *UsecaseUser) Login(req dtos.LoginReq) (*common.RespData, error) {
 	resp := &common.RespData{
 		Message: "Login Success",
 		Data:    map[string]any{"token": "exampleToken!"},
+	}
+
+	return resp, nil
+}
+
+func (uc *UsecaseUser) Register(req dtos.RegisterReq) (*common.RespData, error) {
+
+	hashedPass, err := bcrypt.GenerateFromPassword([]byte(req.Password), bcrypt.DefaultCost)
+	if err != nil {
+		return nil, err
+	}
+
+	user := models.Users{
+		Username: req.Username,
+		Name:     req.Name,
+		Status:   constants.USER_STATUS_ACTIVE,
+		Password: string(hashedPass),
+		Role:     req.Role,
+	}
+
+	if req.Role == "" {
+		user.Role = constants.USER_ROLE_USER
+	}
+
+	err = uc.repo.CreateUser(&user)
+	if err != nil {
+		return nil, err
+	}
+
+	// to hide the password
+	user.Password = "secret!"
+
+	resp := &common.RespData{
+		Message: "Register Success",
+		Data:    user,
 	}
 
 	return resp, nil

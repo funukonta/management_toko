@@ -1,21 +1,27 @@
 package models
 
 import (
-	"time"
-
+	"github.com/funukonta/management_toko/pkg/common"
 	"gorm.io/gorm"
 )
 
 type Users struct {
-	ID         string         `json:"id"`
-	Username   string         `json:"username"`
-	Password   string         `json:"password"`
-	Name       string         `json:"name"`
-	Role       string         `json:"role"`
-	Status     string         `json:"status"`
-	Created_at time.Time      `json:"created_at"`
-	Updated_at time.Time      `json:"updated_at"`
-	Deleted_at gorm.DeletedAt `json:"deleted_at"`
+	common.ModelID
+	Username string `json:"username" gorm:"unique"`
+	Password string `json:"password"`
+	Name     string `json:"name"`
+	Role     string `json:"role"`
+	Status   string `json:"status"`
+}
+
+func (u *Users) TableName() string {
+	return "users"
+}
+
+func (u *Users) BeforeCreate(db *gorm.DB) error {
+	u.SetUUID("usr")
+	u.ModelID.BeforeCreate(db)
+	return nil
 }
 
 type UserCondition struct {
