@@ -1,0 +1,11 @@
+package constants
+
+const (
+	USER_STATUS_ACTIVE   = "ACTIVE"
+	USER_STATUS_INACTIVE = "INACTIVE"
+)
+
+const (
+	USER_ROLE_ADMIN = "ADMIN"
+	USER_ROLE_USER  = "USER"
+)
