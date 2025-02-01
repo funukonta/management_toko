@@ -12,7 +12,7 @@ func generateNewUUIDWithPrefix(prefix string) string {
 }
 
 type ModelID struct {
-	ID         string         `json:"id"`
+	ID         string         `json:"id" gorm:"primaryKey"`
 	Created_at time.Time      `json:"created_at"`
 	Updated_at time.Time      `json:"updated_at"`
 	Deleted_at gorm.DeletedAt `json:"deleted_at"`
@@ -25,4 +25,10 @@ func (m *ModelID) BeforeCreate(db *gorm.DB) error {
 
 func (m *ModelID) SetUUID(prefix string) {
 	m.ID = generateNewUUIDWithPrefix(prefix)
+}
+
+type ModelCode struct {
+	Code        string `json:"code" gorm:"primaryKey"`
+	Description string `json:"description"`
+	Label       string `json:"label"`
 }

@@ -35,7 +35,10 @@ func ConnectPostgres() *gorm.DB {
 	}
 
 	// auto migrate
-	db.AutoMigrate(models.Users{})
+	db.AutoMigrate(
+		models.Users{},
+		models.Products{},
+	)
 
 	return db
 
