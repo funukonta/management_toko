@@ -21,6 +21,7 @@ func main() {
 	})
 
 	routes.UserRoutes(app, db)
+	routes.ProductRoutes(app, db)
 
 	port := ":8080"
 	if os.Getenv("APP_PORT") != "" {

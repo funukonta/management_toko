@@ -13,7 +13,7 @@ func UserRoutes(app fiber.Router, db *gorm.DB) {
 	ucUser := usecases.NewUsecaseUser(repoUser)
 	handlers := handlers.NewHandlerUser(ucUser)
 
-	app.Get("/users", handlers.GetUser)
+	// app.Get("/users", handlers.GetUser)
 
 	app.Post("/login", handlers.Login)
 	app.Post("/register", handlers.Register)

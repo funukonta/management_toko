@@ -15,13 +15,6 @@ func NewHandlerUser(useruc *usecases.UsecaseUser) *HanlderUser {
 	return &HanlderUser{userUc: useruc}
 }
 
-func (h *HanlderUser) GetUser(c *fiber.Ctx) error {
-
-	return c.JSON(fiber.Map{
-		"message": "GetUser endpoint is working!",
-	})
-}
-
 func (h *HanlderUser) Login(c *fiber.Ctx) error {
 	var req dtos.LoginReq
 	err := c.BodyParser(&req)

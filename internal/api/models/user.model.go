@@ -28,6 +28,16 @@ type UserCondition struct {
 	Where UserWhere
 }
 
+func (w *UserWhere) ImpelementWhere(db *gorm.DB) {
+	if w.ID != "" {
+		db.Where("id = ?", w.ID)
+	}
+
+	if w.Username != "" {
+		db.Where("username = ?", w.Username)
+	}
+}
+
 type UserWhere struct {
 	ID       string
 	Username string
